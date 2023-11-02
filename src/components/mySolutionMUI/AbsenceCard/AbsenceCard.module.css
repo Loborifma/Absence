@@ -1,3 +1,11 @@
+.absence_card {
+  height: 100%;
+  background-color: rgb(128, 216, 128);
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+}
+
 .absence_label {
   display: flex;
   height: 100%;
@@ -15,6 +23,7 @@
   border: none;
   border-radius: 50%;
   background-color: inherit;
-  margin-right: 5px;
+  margin-right: 2px;
+  margin-left: 2px;
   box-shadow: 0px 0px 2px black;
 }

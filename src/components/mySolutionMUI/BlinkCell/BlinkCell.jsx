@@ -10,8 +10,8 @@ const BlinkCell = React.memo(({ children, handleClick }) => {
         height: 50,
         borderRight: "1px solid grey",
         paddingBottom: 0,
-        paddingRight: 1,
-        paddingLeft: 1,
+        paddingRight: 0,
+        paddingLeft: 0,
       }}
       onClick={handleClick}
     >

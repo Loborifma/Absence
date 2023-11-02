@@ -5,9 +5,8 @@ export const getLabels = () => {
 
   for (let i = 0; i < 30; i++) {
     data.push({
-      id: uniqueId("labels-row"),
+      id: `labels${i}`,
       label: `John Doe${i}`,
-      cellId: uniqueId("labels-cell"),
     });
   }
 

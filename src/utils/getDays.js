@@ -2,16 +2,17 @@ import { addDays, addMonths, format } from "date-fns";
 import { uniqueId } from "lodash";
 
 export function getDaysInMonth(year, month) {
-  let date = new Date(year, month, 1);
+  let dateUTC = new Date(year, month, 1);
   const days = [];
-  const formattedMonth = format(new Date(date), "MMMM yyyy");
+  const formattedMonth = format(new Date(dateUTC), "MMMM yyyy");
 
-  while (date.getMonth() === month) {
+  while (dateUTC.getMonth() === month) {
     days.push({
       id: uniqueId("header-days"),
-      day: format(new Date(date), "dd eeee"),
+      day: format(new Date(dateUTC), "dd eeee"),
+      date: dateUTC.setHours(0),
     });
-    date = addDays(date, 1);
+    dateUTC = addDays(dateUTC, 1);
   }
 
   return {
