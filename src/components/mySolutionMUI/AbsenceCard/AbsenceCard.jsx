@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 
 import cl from "./AbsenceCard.module.css";
 import { Paper } from "@mui/material";
@@ -10,11 +10,11 @@ const AbsenceCard = ({
   amountDays,
   onAddSubstitute,
   onDeleteAbsence,
-}) => {
+}, ref) => {
   const [substitute, setSubstitute] = useState(label);
 
   return (
-    <div className={cl.absence_card}>
+    <div className={cl.absence_card} ref={ref}>
       <div className={cl.absence_label}>{substitute}</div>
       <button
         type="button"
@@ -34,4 +34,4 @@ const AbsenceCard = ({
   );
 };
 
-export default AbsenceCard;
+export default forwardRef(AbsenceCard);

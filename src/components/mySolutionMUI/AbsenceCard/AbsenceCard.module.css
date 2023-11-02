@@ -2,6 +2,7 @@
   height: 100%;
   background-color: rgb(128, 216, 128);
   padding: 0 5px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
 }

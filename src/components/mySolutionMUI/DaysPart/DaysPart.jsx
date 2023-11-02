@@ -21,6 +21,8 @@ const DaysPart = () => {
   const [absences, setAbsences] = useState([]);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const clickedDay = useRef();
+  const fromEl = useRef()
+  const toEl = useRef()
 
   const handleAddAbsencePeriod = (dayIndex, monthIndex, labelIndex) => {
     if (labelIndex !== 0) return;
@@ -46,6 +48,10 @@ const DaysPart = () => {
     );
   };
 
+  useEffect(() => {
+    console.log(window.fromEl, toEl);
+  })
+
   return (
     <div className={cl.days_part}>
       <Table stickyHeader>
@@ -62,7 +68,7 @@ const DaysPart = () => {
                 zIndex: 3,
               }}
             >
-              <span>Label</span>
+              <span>Name</span>
             </TableCell>
             {daysInYear.map((el) => (
               <React.Fragment key={uniqueId()}>
@@ -140,7 +146,35 @@ const DaysPart = () => {
                     )}
                     {labelIndex === 0 &&
                       absences.map((absence) => {
-                        if (absence.from === elDay.date) {
+                        if (absence.from <= elDay.date && absence.to >= elDay.date) {
+                          if(absence.from === elDay.date){
+                            return (
+                              <AbsenceCard
+                                ref={fromEl}
+                                key={absences[0].id}
+                                label={absences[0].substitute}
+                                amountDays={absences[0].diff}
+                                onAddSubstitute
+                                onDeleteAbsence={(event) =>
+                                  handleDeleteAbsence(event, dayIndex, monthIndex)
+                                }
+                              />
+                            );
+                          }
+                          if(absence.to === elDay.date){
+                            return (
+                              <AbsenceCard
+                                ref={toEl}
+                                key={absences[0].id}
+                                label={absences[0].substitute}
+                                amountDays={absences[0].diff}
+                                onAddSubstitute
+                                onDeleteAbsence={(event) =>
+                                  handleDeleteAbsence(event, dayIndex, monthIndex)
+                                }
+                              />
+                            );
+                          }
                           return (
                             <AbsenceCard
                               key={absences[0].id}
