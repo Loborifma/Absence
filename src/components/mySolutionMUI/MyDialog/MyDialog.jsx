@@ -8,12 +8,31 @@ import {
   DialogTitle,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { uniqueId } from "lodash";
+import { format } from "date-fns";
 
-const MyDialog = ({ isOpen, setIsOpen, setAbsences, substitutes }) => {
-  const { register, handleSubmit } = useForm({});
+const MyDialog = ({
+  clickedDay,
+  isOpen,
+  setIsOpen,
+  setAbsences,
+  substitutes,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      from: format(new Date(clickedDay), "yyyy-MM-dd"),
+      to: "",
+      substitute: "",
+    },
+  });
 
   const onSubmit = ({ from, to, substitute }) => {
     const diff =
@@ -53,6 +72,9 @@ const MyDialog = ({ isOpen, setIsOpen, setAbsences, substitutes }) => {
             }}
             {...register("from", { required: true })}
           />
+          {errors.from && (
+            <Typography variant="h6">Это поле обязательное</Typography>
+          )}
           <TextField
             type="date"
             fullWidth
@@ -62,8 +84,16 @@ const MyDialog = ({ isOpen, setIsOpen, setAbsences, substitutes }) => {
             InputLabelProps={{
               shrink: true,
             }}
-            {...register("to", { required: true })}
+            {...register("to", {
+              required: true,
+              validate: (value) =>
+                value >= getValues("from") ||
+                "toDate should be later than fromDate",
+            })}
           />
+          {errors.to && (
+            <Typography variant="h6">{errors.to.message}</Typography>
+          )}
           <TextField
             id="substitute-select"
             label="Заместитель"
