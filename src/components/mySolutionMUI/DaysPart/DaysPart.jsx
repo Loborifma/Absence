@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import cl from "./DaysPart.module.css";
 import {
@@ -24,39 +24,53 @@ const DaysPart = () => {
   const [absences, setAbsences] = useState([]);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const clickedDay = useRef();
-  const fromEl = useRef();
-  const toEl = useRef();
-  const absenceWidth = useRef();
+  const fromEl = useRef([]);
+  const toEl = useRef([]);
+  const absenceWidth = useRef([]);
   const amountOfDays = useRef();
 
+  
   const handleAddAbsencePeriod = (elDay, dayIndex, monthIndex, labelIndex) => {
     if (labelIndex !== 0) return;
-
+    
     const targetDay = daysInYear[monthIndex].days[dayIndex].day;
     clickedDay.current = { index: dayIndex, date: elDay.date };
-
+    
     if (absences.find((absence) => absence.from === targetDay)) return;
 
     setIsOpenDialog(true);
   };
-
+  
   const handleDeleteAbsence = (event, dayIndex, monthIndex) => {
     event.stopPropagation();
     const targetDay = daysInYear[monthIndex].days[dayIndex].day;
-
+    
     const indexOfTargetAbsence = absences.findIndex(
       (absence) => absence.from === targetDay
-    );
-
-    setAbsences((prevAbsences) =>
+      );
+      
+      setAbsences((prevAbsences) =>
       prevAbsences.toSpliced(indexOfTargetAbsence, 1)
-    );
-  };
+      );
+    };
+    const absencePeriods = useMemo((elDay, dayIndex, monthIndex) => detectFirstNLastAbsence(
+      absences,
+      elDay,
+      fromEl,
+      toEl,
+      dayIndex,
+      monthIndex,
+      handleDeleteAbsence,
+      absenceWidth,
+      amountOfDays
+    ), [absences])
 
   useEffect(() => {
-    absenceWidth.current =
-      toEl.current?.getBoundingClientRect().right -
-      fromEl.current?.getBoundingClientRect().left;
+    console.log(fromEl, toEl, absenceWidth);
+    if(fromEl.current.length && toEl.current.length){
+      absenceWidth.current.push(fromEl.current.map((el, i) => toEl.current[i]?.getBoundingClientRect().right -
+      el?.getBoundingClientRect().left))
+    }
   });
 
   return (
@@ -93,18 +107,8 @@ const DaysPart = () => {
                           substitutes={labels}
                         />
                       )}
-                    {labelIndex === 0 &&
-                      detectFirstNLastAbsence(
-                        absences,
-                        elDay,
-                        fromEl,
-                        toEl,
-                        dayIndex,
-                        monthIndex,
-                        handleDeleteAbsence,
-                        absenceWidth,
-                        amountOfDays
-                      )}
+                    {labelIndex === 0 && !isOpenDialog &&
+                      absencePeriods}
                   </BlinkCell>
                 ));
               })}

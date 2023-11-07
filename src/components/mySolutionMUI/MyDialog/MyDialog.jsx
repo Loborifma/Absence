@@ -35,6 +35,7 @@ const MyDialog = ({
   });
 
   const onSubmit = ({ from, to, substitute }) => {
+    console.log('submit');
     const diff =
       Math.floor((new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24)) + 1;
 

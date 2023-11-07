@@ -13,16 +13,16 @@ export const detectFirstNLastAbsence = (
   absenceWidth,
   amountOfDays
 ) => {
-  return absences.map((absence) => {
+  return absences.map((absence,i) => {
     amountOfDays.current = absence.diff;
     if (absence.from > elDay.date || absence.to < elDay.date) return null;
     if (absence.from === elDay.date) {
       return (
         <AbsenceCard
-          ref={fromEl}
+          ref={(ref) => fromEl.current?.push(ref)}
           key={absence.id}
           label={absence.substitute}
-          absenceWidth={absenceWidth}
+          absenceWidth={absenceWidth[i]}
           absenceDays={absence.diff}
           onAddSubstitute
           onDeleteAbsence={(event) =>
@@ -32,7 +32,7 @@ export const detectFirstNLastAbsence = (
       );
     }
     if (absence.to === elDay.date) {
-      return <div ref={toEl} key={uniqueId()} style={{ width: "90%" }} />;
+      return <div ref={(ref) => toEl.current?.push(ref)} key={uniqueId()} style={{ width: "90%" }} />;
     }
     return <Fragment key={uniqueId()} />;
   });

@@ -13,8 +13,8 @@ const AbsenceCard = (
 
   useLayoutEffect(() => {
     isOneAbsence.current = absenceDays === 1;
-
-    ref.current.style.width = `${absenceWidth.current}px`;
+// console.log(absenceWidth);
+    // ref.current.style.width = `${absenceWidth.current}px`;
   });
 
   return (
@@ -22,7 +22,7 @@ const AbsenceCard = (
       className={isOneAbsence.current ? cl.absence_card_one : cl.absence_card}
       ref={ref}
     >
-      {console.log(isOneAbsence.current)}
+      {/* {console.log(isOneAbsence.current)} */}
       <div className={cl.absence_label}>{substitute}</div>
       <button
         type="button"
