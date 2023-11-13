@@ -18,41 +18,47 @@ const MyDialog = ({
   clickedDay,
   isOpen,
   setIsOpen,
-  setAbsences,
+  label,
+  setLabels,
   substitutes,
 }) => {
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
       from: format(new Date(clickedDay), "yyyy-MM-dd"),
-      to: "",
-      substitute: "",
+      to: format(new Date(clickedDay), "yyyy-MM-dd"),
+      substitute: "No one",
     },
   });
 
   const onSubmit = ({ from, to, substitute }) => {
-    const diff =
-      Math.floor((new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24)) + 1;
+    setLabels((prevVal) => {
+      const newAbsences = [
+        ...prevVal[0].absences,
+        {
+          id: uniqueId("absence"),
+          from: new Date(from).setHours(0),
+          to: new Date(to).setHours(0),
+          substitute,
+        },
+      ];
 
-    setAbsences((prevAbsences) => [
-      ...prevAbsences,
-      {
-        id: uniqueId("absence"),
-        from: new Date(from).setHours(0),
-        to: new Date(to).setHours(0),
-        diff,
-        substitute,
-      },
-    ]);
+      return prevVal.map((item, index) =>
+        index === 0 ? { ...item, absences: newAbsences } : item
+      );
+    });
+
     setIsOpen(false);
   };
 
   const onClose = (event) => {
     event.stopPropagation();
+    reset();
     setIsOpen(false);
   };
 
@@ -70,10 +76,23 @@ const MyDialog = ({
             InputLabelProps={{
               shrink: true,
             }}
-            {...register("from", { required: true })}
+            {...register("from", {
+              required: true,
+              validate: {
+                earlierThenTo: (value) =>
+                  value <= getValues("from") ||
+                  "This field should be earlier than field 'по'",
+                isEmptyDay: (value) =>
+                  label.absences.find(
+                    (el) =>
+                      el.from <= new Date(value).setHours(0) &&
+                      new Date(value).setHours(0) <= el.to
+                  ) && "This day already occupied",
+              },
+            })}
           />
           {errors.from && (
-            <Typography variant="h6">Это поле обязательное</Typography>
+            <Typography variant="h6">{errors.from.message}</Typography>
           )}
           <TextField
             type="date"
@@ -86,9 +105,17 @@ const MyDialog = ({
             }}
             {...register("to", {
               required: true,
-              validate: (value) =>
-                value >= getValues("from") ||
-                "toDate should be later than fromDate",
+              validate: {
+                laterThanFrom: (value) =>
+                  value >= getValues("from") ||
+                  "This field should be later than field 'c'",
+                isEmptyDay: (value) =>
+                  label.absences.find(
+                    (el) =>
+                      el.from <= new Date(value).setHours(0) &&
+                      new Date(value).setHours(0) <= el.to
+                  ) && "This day already occupied",
+              },
             })}
           />
           {errors.to && (

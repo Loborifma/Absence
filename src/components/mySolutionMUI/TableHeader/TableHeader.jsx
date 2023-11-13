@@ -6,23 +6,21 @@ import MonthHeader from "./MonthHeader";
 import DaysHeader from "./DaysHeader";
 import { uniqueId } from "lodash";
 
-const TableHeader = ({ daysInYear }) => {
+const TableHeader = ({ months }) => {
   return (
-    <>
-      <TableHead>
-        <TableRow>
-          <NameHeader />
-          {daysInYear.map((el) => (
-            <MonthHeader key={uniqueId()} el={el} />
-          ))}
-        </TableRow>
-        <TableRow>
-          {daysInYear.map(({ days }) => {
-            return days.map((el) => <DaysHeader key={el.id} el={el} />);
-          })}
-        </TableRow>
-      </TableHead>
-    </>
+    <TableHead>
+      <TableRow>
+        <NameHeader />
+        {months.map((el) => (
+          <MonthHeader key={uniqueId()} el={el} />
+        ))}
+      </TableRow>
+      <TableRow>
+        {months.map(({ daysOfMonth }) => {
+          return daysOfMonth.map((el) => <DaysHeader key={el.id} el={el} />);
+        })}
+      </TableRow>
+    </TableHead>
   );
 };
 

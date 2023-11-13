@@ -8,7 +8,7 @@ const MonthHeader = ({ el }) => {
       <TableCell colSpan={2} size="small" sx={monthHeader}>
         {el.formattedMonth}
       </TableCell>
-      <TableCell sx={{ height: 5 }} colSpan={el.days.length - 2} />
+      <TableCell sx={{ height: 5 }} colSpan={el.daysOfMonth.length - 2} />
     </Fragment>
   );
 };

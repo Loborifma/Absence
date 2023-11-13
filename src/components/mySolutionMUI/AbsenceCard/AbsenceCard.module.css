@@ -1,26 +1,44 @@
-.absence_card,
-.absence_card_one {
-  height: 70%;
+.absence_card {
+  height: 80%;
   background-color: rgb(128, 216, 128);
   padding: 0 5px;
   border-radius: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: absolute;
   bottom: 0;
-}
-
-.absence_card_one {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .absence_label {
   display: flex;
   height: 100%;
+  margin-left: 20px;
   align-items: center;
   justify-content: center;
+}
+
+.absence_label_one {
+  margin-left: 5px;
+}
+
+.absence_buttons {
+  display: flex;
+  flex-flow: row;
+  margin-right: 20px;
+}
+
+.absence_buttons_one {
+  flex-flow: column;
+  margin-right: 2px;
+}
+
+.absence_float_button:first-child {
+  margin-right: 5px;
+}
+
+.absence_buttons_one > .absence_float_button:first-child {
+  margin-bottom: 5px;
 }
 
 .absence_float_button {
@@ -33,7 +51,5 @@
   border: none;
   border-radius: 50%;
   background-color: inherit;
-  margin-right: 2px;
-  margin-left: 2px;
   box-shadow: 0px 0px 2px black;
 }

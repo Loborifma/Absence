@@ -17,7 +17,7 @@ export function getDaysInMonth(year, month) {
 
   return {
     formattedMonth,
-    days,
+    daysOfMonth: days,
   };
 }
 
