@@ -3,12 +3,12 @@ export const namesHeader = {
   borderRight: "1px solid black",
   minWidth: 400,
   left: 0,
-  zIndex: 3,
+  zIndex: 4,
 };
 
 export const monthHeader = {
   left: 435,
-  zIndex: 3,
+  zIndex: 4,
   borderBottom: "1px solid grey",
 };
 

@@ -1,9 +1,7 @@
 import { TableCell } from "@mui/material";
 import React from "react";
 
-// import cl from "./BlinkCell.module.css";
-
-const BlinkCell = React.memo(({ children, handleClick, id }) => {
+const BlinkCell = React.memo(({ children, onClick, onMouseUp, id }) => {
   return (
     <TableCell
       id={id}
@@ -14,7 +12,8 @@ const BlinkCell = React.memo(({ children, handleClick, id }) => {
         paddingRight: 1,
         paddingLeft: 1,
       }}
-      onClick={handleClick}
+      onMouseUp={onMouseUp}
+      onClick={onClick}
     >
       {children}
     </TableCell>

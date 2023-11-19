@@ -6,7 +6,7 @@ import MonthHeader from "./MonthHeader";
 import DaysHeader from "./DaysHeader";
 import { uniqueId } from "lodash";
 
-const TableHeader = ({ months }) => {
+const TableHeader = ({ months, currentDay }) => {
   return (
     <TableHead>
       <TableRow>
@@ -17,7 +17,9 @@ const TableHeader = ({ months }) => {
       </TableRow>
       <TableRow>
         {months.map(({ daysOfMonth }) => {
-          return daysOfMonth.map((el) => <DaysHeader key={el.id} el={el} />);
+          return daysOfMonth.map((el) => (
+            <DaysHeader key={el.id} el={el} currentDay={currentDay} />
+          ));
         })}
       </TableRow>
     </TableHead>

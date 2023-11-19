@@ -42,8 +42,8 @@ const MyDialog = ({
         ...prevVal[0].absences,
         {
           id: uniqueId("absence"),
-          from: new Date(from).setHours(0),
-          to: new Date(to).setHours(0),
+          from: format(new Date(from), "yyyy-MM-dd"),
+          to: format(new Date(to), "yyyy-MM-dd"),
           substitute,
         },
       ];

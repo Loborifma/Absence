@@ -1,4 +1,4 @@
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import { random, uniqueId } from "lodash";
 
 export const getLabels = () => {
@@ -9,7 +9,9 @@ export const getLabels = () => {
       2023,
       random(9, 11, false),
       random(1, 30, false)
-    ).setHours(0);
+    );
+
+    const endRandomDate = addDays(randomDate, random(0, 10, false));
 
     i === 0
       ? data.push({
@@ -23,20 +25,8 @@ export const getLabels = () => {
           absences: [
             {
               id: uniqueId("absence"),
-              from: randomDate,
-              to: addDays(randomDate, random(0, 10, false)).setHours(0),
-              substitute: "John Doe 0",
-            },
-            {
-              id: uniqueId("absence"),
-              from: randomDate,
-              to: addDays(randomDate, random(0, 10, false)).setHours(0),
-              substitute: "John Doe 0",
-            },
-            {
-              id: uniqueId("absence"),
-              from: randomDate,
-              to: addDays(randomDate, random(0, 10, false)).setHours(0),
+              from: format(randomDate, "yyyy-MM-dd"),
+              to: format(endRandomDate, "yyyy-MM-dd"),
               substitute: "John Doe 0",
             },
           ],

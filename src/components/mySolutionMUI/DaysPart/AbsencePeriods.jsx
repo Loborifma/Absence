@@ -1,8 +1,14 @@
 import { uniqueId } from "lodash";
 import AbsenceCard from "../AbsenceCard/AbsenceCard";
-import { Fragment, forwardRef } from "react";
+import { Fragment } from "react";
 
 const AbsencePeriods = ({
+  labels,
+  setLabels,
+  isCollision,
+  absenceId,
+  drugAbsence,
+  isUserRow,
   startDate,
   endDate,
   substitute,
@@ -14,7 +20,13 @@ const AbsencePeriods = ({
   if (startDate === date) {
     return (
       <AbsenceCard
-        label={substitute}
+        labels={labels}
+        setLabels={setLabels}
+        isCollision={isCollision}
+        absenceId={absenceId}
+        drugAbsence={drugAbsence}
+        isUserRow={isUserRow}
+        substitute={substitute}
         amountOfDays={amountOfDays}
         onAddSubstitute
         onDeleteAbsence={handleDeleteAbsence}
