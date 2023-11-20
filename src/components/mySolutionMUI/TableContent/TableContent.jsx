@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 
 import { TableCell, TableRow } from "@mui/material";
-import { substituteName } from "../DaysPart/styles";
+import { substituteName } from "../Table/styles";
 import BlinkCell from "../BlinkCell/BlinkCell";
 import MyDialog from "../MyDialog/MyDialog";
-import AbsencePeriods from "../DaysPart/AbsencePeriods";
 import { getAmountOfDays } from "../../../utils/daysHelper";
+import AbsenceCard from "../AbsenceCard/AbsenceCard";
+import { uniqueId } from "lodash";
 
 const TableContent = ({
   labels,
@@ -70,27 +71,26 @@ const TableContent = ({
                 );
               }
 
-              return (
-                <AbsencePeriods
-                  key={id}
-                  labels={labels}
-                  setLabels={setLabels}
-                  isCollision={isCollision}
-                  absenceId={id}
-                  drugAbsence={drugAbsence}
-                  isUserRow={isUserRow}
-                  startDate={startDateUTC}
-                  endDate={endDateUTC}
-                  substitute={substitute}
-                  amountOfDays={amountOfDays}
-                  date={day.date}
-                  dayIndex={dayIndex}
-                  monthIndex={monthIndex}
-                  handleDeleteAbsence={(event) =>
-                    handleDeleteAbsence(event, dayIndex, monthIndex, label)
-                  }
-                />
-              );
+              if (startDateUTC > day.date || endDateUTC < day.date) return null;
+              if (startDateUTC === day.date) {
+                return (
+                  <AbsenceCard
+                    key={id}
+                    labels={labels}
+                    setLabels={setLabels}
+                    isCollision={isCollision}
+                    absenceId={id}
+                    drugAbsence={drugAbsence}
+                    isUserRow={isUserRow}
+                    substitute={substitute}
+                    amountOfDays={amountOfDays}
+                    onDeleteAbsence={(event) =>
+                      handleDeleteAbsence(event, dayIndex, monthIndex, label)
+                    }
+                  />
+                );
+              }
+              return <Fragment key={uniqueId()} />;
             })}
           </BlinkCell>
         ));

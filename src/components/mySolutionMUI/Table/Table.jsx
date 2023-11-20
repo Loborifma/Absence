@@ -1,15 +1,21 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
-import cl from "./DaysPart.module.css";
-import { Table, TableBody } from "@mui/material";
+import cl from "./Table.module.css";
+import { Table as TableMUI, TableBody } from "@mui/material";
 import { getLabels } from "../../../utils/data";
 import { getDaysInMonth } from "../../../utils/getDays";
 import TableHeader from "../TableHeader/TableHeader";
 import TableContent from "../TableContent/TableContent";
 import { addDays, format } from "date-fns";
 
-const DaysPart = () => {
-  const [months] = useState([
+const Table = () => {
+  const [months, setMonths] = useState([
     getDaysInMonth(new Date().getFullYear(), new Date().getMonth() - 1),
     getDaysInMonth(new Date().getFullYear(), new Date().getMonth()),
     getDaysInMonth(new Date().getFullYear(), new Date().getMonth() + 1),
@@ -17,40 +23,65 @@ const DaysPart = () => {
   const [labels, setLabels] = useState(getLabels());
   const currentDay = useRef(null);
   const clickedDay = useRef(null);
-  const isFirstTimeFirstPart = useRef(false);
-  const isFirstTimeLastPart = useRef(false);
+  const currentPosition = useRef(null);
 
-  const callback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (months[0].daysOfMonth[15].id === entry.target.id) {
-        if (isFirstTimeFirstPart.current) {
-          console.log(entry.target);
+  const callback = useCallback(
+    (entries, observer) => {
+      let currentMonth;
+      let currentYear;
+
+      entries.forEach((entry) => {
+        if (
+          months[0].daysOfMonth[20]?.id === entry.target?.id &&
+          entry.isIntersecting &&
+          entry.intersectionRatio > 0
+        ) {
+          console.log(window.scrollX);
+          currentPosition.current = window.scrollX;
+
+          currentMonth = new Date(months[0].daysOfMonth[0].date).getMonth();
+          currentYear = new Date(months[0].daysOfMonth[0].date).getFullYear();
+
+          setMonths((prevVal) => [
+            getDaysInMonth(new Date().getFullYear(), currentMonth - 1),
+            ...prevVal,
+          ]);
+
           observer.unobserve(entry.target);
-        } else {
-          isFirstTimeFirstPart.current = true;
         }
-      }
-      if (months[months.length - 1].daysOfMonth[15].id === entry.target.id) {
-        if (isFirstTimeLastPart.current) {
-          console.log(entry.target);
+
+        if (
+          months[months.length - 1].daysOfMonth[10]?.id === entry.target?.id &&
+          entry.isIntersecting &&
+          entry.intersectionRatio > 0
+        ) {
+          currentMonth = new Date(
+            months[months.length - 1].daysOfMonth[0].date
+          ).getMonth();
+          currentYear = new Date(
+            months[months.length - 1].daysOfMonth[0].date
+          ).getFullYear();
+
+          setMonths((prevVal) => [
+            ...prevVal,
+            getDaysInMonth(currentYear, currentMonth + 1),
+          ]);
           observer.unobserve(entry.target);
-        } else {
-          isFirstTimeLastPart.current = true;
         }
-      }
-    });
-  };
+      });
+    },
+    [months]
+  );
 
   useEffect(() => {
+    if (currentPosition.current) {
+      window.scrollTo({ left: currentPosition.current + 3000 });
+    }
+
     const observer = new IntersectionObserver(callback);
     const daysNode = document.querySelectorAll(".days_header");
     daysNode.forEach((day) => observer.observe(day));
-
-    if (isFirstTimeFirstPart.current || isFirstTimeLastPart.current) {
-      isFirstTimeFirstPart.current = false;
-      isFirstTimeLastPart.current = false;
-    }
-  }, [months]);
+  }, [months, callback]);
 
   const handleAddAbsencePeriod = (
     elDay,
@@ -103,7 +134,7 @@ const DaysPart = () => {
 
     const { id: absenceId, diffDays, countOfDays } = absence.current;
     absence.current = {};
-    console.log(countOfDays);
+    // console.log(countOfDays);
     setLabels((prevVal) => {
       const indexOfTargetAbsence = prevVal[0].absences.findIndex(
         (el) => el.id === absenceId
@@ -133,12 +164,11 @@ const DaysPart = () => {
     const node = document.getElementById(currentDay.current);
     node.scrollIntoView({ inline: "center" });
     window.scrollTo({ top: 0 });
-    console.log("DaysPart", currentDay.current);
   }, []);
 
   return (
-    <div className={cl.days_part}>
-      <Table stickyHeader>
+    <div className={cl.table}>
+      <TableMUI stickyHeader>
         <TableHeader months={months} currentDay={currentDay} />
         <TableBody>
           {labels.map((label, labelIndex) => {
@@ -158,9 +188,9 @@ const DaysPart = () => {
             );
           })}
         </TableBody>
-      </Table>
+      </TableMUI>
     </div>
   );
 };
 
-export default DaysPart;
+export default Table;

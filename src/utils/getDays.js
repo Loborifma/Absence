@@ -2,11 +2,23 @@ import { addDays, addMonths, format } from "date-fns";
 import { uniqueId } from "lodash";
 
 export function getDaysInMonth(year, month) {
-  let dateUTC = new Date(year, month, 1);
+  let currentMonth = month;
+  let currentYear = year;
+
+  if (month < 0) {
+    currentYear--;
+    currentMonth += 12;
+  }
+  if (month > 11) {
+    currentYear++;
+    currentMonth -= 12;
+  }
+
+  let dateUTC = new Date(currentYear, currentMonth, 1);
   const days = [];
   const formattedMonth = format(new Date(dateUTC), "MMMM yyyy");
 
-  while (dateUTC.getMonth() === month) {
+  while (dateUTC.getMonth() === currentMonth) {
     days.push({
       id: uniqueId("header-days"),
       day: format(new Date(dateUTC), "dd eeee"),

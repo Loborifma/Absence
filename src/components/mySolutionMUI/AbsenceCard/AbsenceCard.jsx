@@ -45,10 +45,10 @@ const AbsenceCard = ({
   const handleOnStart = (event) => {
     const node = document.getElementById(absenceId);
     const grabButtonStart = document.getElementById(
-      `grab_button_start${absenceId}`
+      "grab_button_start" + absenceId
     );
     const grabButtonEnd = document.getElementById(
-      `grab_button_end${absenceId}`
+      "grab_button_end" + absenceId
     );
     node.style.zIndex = 2;
     node.style.cursor = "grabbing";
