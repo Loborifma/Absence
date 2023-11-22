@@ -1,0 +1,103 @@
+{
+  "explorer.confirmDelete": false,
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "~/css",
+      "savePathReplacementPairs": null
+    }
+  ],
+  "liveSassCompile.settings.generateMap": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.suggest.showCustomcolors": false,
+  "editor.suggest.preview": true,
+  "emmet.includeLanguages": {
+    "javascript": "html",
+    "django-html": "html"
+  },
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "files.associations": {
+    "html": "html"
+  },
+  "typescript.suggest.paths": false,
+  "javascript.suggest.paths": false,
+  "git.enableSmartCommit": true,
+  "editor.linkedEditing": true,
+  "git.confirmSync": false,
+  "explorer.confirmDragAndDrop": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "liveServer.settings.donotVerifyTags": true,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "githubPullRequests.pullBranch": "never",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.suggest.showStatusBar": true,
+  "workbench.colorTheme": "Default Dark+",
+  "editor.fontLigatures": false,
+  "editor.fontVariations": false,
+  "workbench.preferredDarkColorTheme": "Visual Studio Dark",
+  "powermode.enabled": true,
+  "powermode.shake.intensity": 1,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.folders.color": "#90a4ae",
+  "material-icon-theme.folders.theme": "classic",
+  "material-icon-theme.files.color": "#90a4ae",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.titleBarStyle": "custom",
+  "editor.indentSize": "tabSize",
+  "folderTemplates.structures": [
+    {
+      "name": "React JS Template",
+      "omitParentDirectory": true,
+      "structure": [
+        {
+          "fileName": "<FTName>/<FTName>.jsx",
+          "template": "React JS FC"
+        },
+        {
+          "fileName": "<FTName>/<FTName>.scss"
+        },
+        {
+          "fileName": "<FTName>/index.js",
+          "template": "IndexFile"
+        }
+      ]
+    }
+  ],
+  "folderTemplates.fileTemplates": {
+    "React JS FC": [
+      "import React from 'react';",
+      "",
+      "import './<FTName>.scss'",
+      "",
+      "const <FTName> = () => {",
+      "  return <div></div>;",
+      "};",
+      "",
+      "export default <FTName>;"
+    ],
+    "IndexFile": [
+      "import <FTName> from './<FTName>';",
+      "",
+      "export default <FTName>;"
+    ]
+  },
+  "editor.formatOnSave": true,
+  "cSpell.language": "en,ru",
+  "vite.autoStart": false,
+  "extensions.ignoreRecommendations": true,
+  "cSpell.ignoreWords": ["nums"],
+  "terminal.integrated.defaultProfile.windows": "Git Bash"
+}

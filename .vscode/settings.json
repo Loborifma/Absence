@@ -1,0 +1,39 @@
+{
+  "folderTemplates.structures": [
+    {
+      "name": "React JS Template",
+      "omitParentDirectory": true,
+      "structure": [
+        {
+          "fileName": "<FTName>/<FTName>.jsx",
+          "template": "React JS FC"
+        },
+        {
+          "fileName": "<FTName>/<FTName>.module.css"
+        },
+        {
+          "fileName": "<FTName>/index.js",
+          "template": "IndexFile"
+        }
+      ]
+    }
+  ],
+  "folderTemplates.fileTemplates": {
+    "React JS FC": [
+      "import React from 'react';",
+      "",
+      "import cl from './<FTName>.module.css'",
+      "",
+      "const <FTName> = () => {",
+      "  return <div></div>;",
+      "};",
+      "",
+      "export default <FTName>;"
+    ],
+    "IndexFile": [
+      "import <FTName> from './<FTName>';",
+      "",
+      "export default <FTName>;"
+    ]
+  }
+}
