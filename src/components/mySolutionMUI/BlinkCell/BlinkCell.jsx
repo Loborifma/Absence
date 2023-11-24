@@ -1,7 +1,7 @@
 import { TableCell } from "@mui/material";
 import React from "react";
 
-const BlinkCell = React.memo(({ children, onClick, onMouseUp, id }) => {
+const BlinkCell = ({ children, onClick, onMouseUp, id }) => {
   return (
     <TableCell
       id={id}
@@ -18,6 +18,6 @@ const BlinkCell = React.memo(({ children, onClick, onMouseUp, id }) => {
       {children}
     </TableCell>
   );
-});
+};
 
 export default BlinkCell;
