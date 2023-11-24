@@ -71,7 +71,6 @@ const TableContent = ({
                 );
               }
 
-              if (startDateUTC > day.date || endDateUTC < day.date) return null;
               if (startDateUTC === day.date) {
                 return (
                   <AbsenceCard
@@ -90,7 +89,7 @@ const TableContent = ({
                   />
                 );
               }
-              return <Fragment key={uniqueId()} />;
+              return null;
             })}
           </BlinkCell>
         ));

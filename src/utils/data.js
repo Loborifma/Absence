@@ -35,9 +35,3 @@ export const getLabels = () => {
 
   return data;
 };
-
-export const fetchDaysInYearToLabels = (days, labels) => {
-  return labels.map((el) => {
-    return { ...el, days: [...days] };
-  });
-};

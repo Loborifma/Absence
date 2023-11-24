@@ -168,7 +168,7 @@ const Table = () => {
 
   return (
     <div className={cl.table}>
-      <TableMUI stickyHeader>
+      <TableMUI stickyHeader >
         <TableHeader months={months} currentDay={currentDay} />
         <TableBody>
           {labels.map((label, labelIndex) => {

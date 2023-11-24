@@ -1,4 +1,4 @@
-import { addDays, addMonths, format } from "date-fns";
+import { addDays, format } from "date-fns";
 import { uniqueId } from "lodash";
 
 export function getDaysInMonth(year, month) {
@@ -33,16 +33,3 @@ export function getDaysInMonth(year, month) {
   };
 }
 
-export function getDaysInYear(year) {
-  let date = new Date(year, 0, 1);
-  const days = [];
-
-  while (date.getFullYear() === year) {
-    days.push(getDaysInMonth(year, date.getMonth()));
-    date = addMonths(date, 1);
-  }
-
-  return days;
-}
-
-export const twoMonth = [getDaysInMonth(2023, 0), getDaysInMonth(2023, 1)];
